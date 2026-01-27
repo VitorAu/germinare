@@ -1,7 +1,8 @@
 #include "Engine.h"
 
-#include "components/Components.h"
+#include "components/CInput.h"
 #include "ecs/Scene.h"
+
 #include "raylib.h"
 
 Scene m_scene;
@@ -11,9 +12,7 @@ Engine::Engine(const int screenWidth, const int screenHeight, const char *screen
 {
 }
 
-Engine::~Engine()
-{
-}
+Engine::~Engine() = default;
 
 void Engine::Init()
 {
@@ -21,21 +20,8 @@ void Engine::Init()
     SetTargetFPS(60);
 
     auto player = m_scene.SceneAddEntity("player");
-    CTransform transform;
-    transform.m_x = 200.0f;
-    transform.m_y = 200.0f;
-
-    CRender render;
-    render.m_tex = LoadTexture("game/assets/sprites/char.png");
-    render.m_srcRec = {0, 0, 48, 48};
-    render.m_destRec = {200, 200, 100, 100};
-    render.m_vecOrigin = {render.m_destRec.width, render.m_destRec.height};
-    render.m_rotation = 0.0f;
-
     CInput input;
 
-    m_scene.SceneAddTransform(transform, *player);
-    m_scene.SceneAddRender(render, *player);
     m_scene.SceneAddInput(input, *player);
 
     m_running = true;
