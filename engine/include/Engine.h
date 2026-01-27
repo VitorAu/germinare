@@ -1,0 +1,21 @@
+#ifndef ENGINE_H
+#define ENGINE_H
+
+class Engine
+{
+  private:
+    const int m_screenWidth;
+    const int m_screenHeight;
+    const char *m_screenTitle;
+    bool m_running = false;
+
+  public:
+    Engine(const int screenWidth, const int screenHeight, const char *screenTitle);
+    ~Engine();
+
+    void Init();
+    void Update();
+    void Quit();
+};
+
+#endif
