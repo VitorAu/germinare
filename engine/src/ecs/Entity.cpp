@@ -4,9 +4,7 @@ Entity::Entity(const std::size_t id, const std::string &tag) : m_id(id), m_tag(t
 {
 }
 
-Entity::~Entity()
-{
-}
+Entity::~Entity() = default;
 
 const std::size_t Entity::Id() const
 {

@@ -1,7 +1,7 @@
 #ifndef SCENE_H
 #define SCENE_H
 
-#include "components/Components.h"
+#include "components/CInput.h"
 #include "ecs/EntityManager.h"
 
 #include <cstddef>
@@ -13,8 +13,6 @@ class Scene
 {
   private:
     EntityManager m_sceneEntities;
-    EntityComponentMap<CRender> m_sceneRenders;
-    EntityComponentMap<CTransform> m_sceneTransforms;
     EntityComponentMap<CInput> m_sceneInputs;
 
   public:
@@ -25,12 +23,8 @@ class Scene
     const EntityVector &SceneEntities();
     const EntityVector &SceneEntities(const std::string &tag);
 
-    CRender *SceneRender(const Entity &e);
-    CTransform *SceneTransform(const Entity &e);
     CInput *SceneInput(const Entity &e);
 
-    void SceneAddRender(const CRender &c, const Entity &e);
-    void SceneAddTransform(const CTransform &c, const Entity &e);
     void SceneAddInput(const CInput &c, const Entity &e);
 
     void Update();

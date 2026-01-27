@@ -1,12 +1,8 @@
 #include "ecs/EntityManager.h"
 
-EntityManager::EntityManager()
-{
-}
+EntityManager::EntityManager() = default;
 
-EntityManager::~EntityManager()
-{
-}
+EntityManager::~EntityManager() = default;
 
 EntityPointer EntityManager::CreateEntity(const std::string &entityTag)
 {
