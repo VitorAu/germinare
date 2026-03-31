@@ -8,6 +8,7 @@
 #include "components/CPosition.hpp"
 #include "components/CRender.hpp"
 #include "components/CRigidBody.hpp"
+#include "components/CCamera.hpp"
 
 #include <cstddef>
 #include <unordered_map>
@@ -24,6 +25,7 @@ class Scene
     EntityComponentMap<CPosition> m_scenePositions;
     EntityComponentMap<CRigidBody> m_sceneRigidBodies;
     EntityComponentMap<CRender> m_sceneRenders;
+    EntityComponentMap<CCamera> m_sceneCameras;
 
   public:
     Scene();
@@ -38,12 +40,16 @@ class Scene
     CPosition *ScenePosition(const Entity &);
     CRigidBody *SceneRigidBody(const Entity &);
     CRender *SceneRender(const Entity &);
+    CCamera *SceneCamera(const Entity &);
 
     void SceneAddInput(const Entity &, const CInput &);
     void SceneAddController(const Entity &, const CController &);
     void SceneAddPosition(const Entity &, const CPosition &);
     void SceneAddRigidBody(const Entity &, const CRigidBody &);
     void SceneAddRender(const Entity &, const CRender &);
+    void SceneAddCamera(const Entity &, const CCamera &);
+
+    CCamera *ActiveCamera();
 
     void Update();
 };

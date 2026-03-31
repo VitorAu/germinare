@@ -1,5 +1,6 @@
 #include "ecs/Scene.hpp"
 
+#include "systems/CameraSystem.hpp"
 #include "systems/InputSystem.hpp"
 #include "systems/MovementSystem.hpp"
 #include "systems/PhysicsSystem.hpp"
@@ -60,6 +61,13 @@ CRender *Scene::SceneRender(const Entity &e)
     return it != m_sceneRenders.end() ? &it->second : nullptr;
 }
 
+CCamera *Scene::SceneCamera(const Entity &e)
+{
+    std::size_t eId = e.Id();
+    auto it = m_sceneCameras.find(eId);
+    return it != m_sceneCameras.end() ? &it->second : nullptr;
+}
+
 void Scene::SceneAddInput(const Entity &e, const CInput &c)
 {
     std::size_t eId = e.Id();
@@ -90,6 +98,22 @@ void Scene::SceneAddRender(const Entity &e, const CRender &c)
     m_sceneRenders[eId] = c;
 }
 
+void Scene::SceneAddCamera(const Entity &e, const CCamera &c)
+{
+    std::size_t eId = e.Id();
+    m_sceneCameras[eId] = c;
+}
+
+CCamera *Scene::ActiveCamera()
+{
+    for (auto &e : m_sceneCameras)
+    {
+        return &e.second;
+    }
+
+    return nullptr;
+}
+
 void Scene::Update()
 {
     float dt = GetFrameTime();
@@ -98,5 +122,6 @@ void Scene::Update()
     InputSystem::Update(*this);
     MovementSystem::Update(*this);
     PhysicsSystem::Update(*this, dt);
+    CameraSystem::Update(*this);
     RenderSystem::Update(*this);
 }
