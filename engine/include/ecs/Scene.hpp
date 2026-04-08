@@ -9,6 +9,7 @@
 #include "components/CRender.hpp"
 #include "components/CRigidBody.hpp"
 #include "components/CCamera.hpp"
+#include "components/CDebug.hpp"
 
 #include <cstddef>
 #include <unordered_map>
@@ -26,6 +27,7 @@ class Scene
     EntityComponentMap<CRigidBody> m_sceneRigidBodies;
     EntityComponentMap<CRender> m_sceneRenders;
     EntityComponentMap<CCamera> m_sceneCameras;
+    EntityComponentMap<CDebug> m_sceneDebugs;
 
   public:
     Scene();
@@ -43,6 +45,7 @@ class Scene
     CRigidBody *SceneRigidBody(const Entity &);
     CRender *SceneRender(const Entity &);
     CCamera *SceneCamera(const Entity &);
+    CDebug *SceneDebug(const Entity &);
 
     void SceneAddInput(const Entity &, const CInput &);
     void SceneAddController(const Entity &, const CController &);
@@ -50,6 +53,7 @@ class Scene
     void SceneAddRigidBody(const Entity &, const CRigidBody &);
     void SceneAddRender(const Entity &, const CRender &);
     void SceneAddCamera(const Entity &, const CCamera &);
+    void SceneAddDebug(const Entity&, const CDebug &);
 
     CCamera *ActiveCamera();
 

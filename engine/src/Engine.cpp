@@ -2,6 +2,7 @@
 
 #include <raylib.h>
 
+#include "components/CDebug.hpp"
 #include "ecs/Scene.hpp"
 
 Scene m_scene;
@@ -28,6 +29,7 @@ void Engine::Init()
     CRigidBody rigidBody;
     CRender render;
     CCamera camera;
+    CDebug debug;
 
     controller.m_controllerMode = ControllerMode::PLAYER;
     position.m_position = {100.0f, 100.0f};
@@ -49,11 +51,13 @@ void Engine::Init()
     m_scene.SceneAddRigidBody(*player, rigidBody);
     m_scene.SceneAddRender(*player, render);
     m_scene.SceneAddCamera(*player, camera);
+    m_scene.SceneAddDebug(*player, debug);
 
     // initializing refrence entity for player movement
     auto refrence = m_scene.SceneAddEntity("refrence");
     CPosition positionRef;
     CRender renderRef;
+    CDebug debugRef;
 
     positionRef.m_position = {100.0f, 100.0f};
     renderRef.m_texture = LoadTexture("assets/sprites/char.png");
@@ -62,6 +66,7 @@ void Engine::Init()
 
     m_scene.SceneAddPosition(*refrence, positionRef);
     m_scene.SceneAddRender(*refrence, renderRef);
+    m_scene.SceneAddDebug(*refrence, debugRef);
 
     m_running = true;
 }
@@ -72,6 +77,14 @@ void Engine::Update()
     {
         BeginDrawing();
         ClearBackground(RAYWHITE);
+
+        if (IsKeyPressed(KEY_P))
+        {
+            for (auto &e : m_scene.SceneEntities())
+            {
+                if (CDebug *debug = m_scene.SceneDebug(*e)) debug->m_enabled = !debug->m_enabled;
+            }
+        }
 
         if (CCamera *camera = m_scene.ActiveCamera())
         {

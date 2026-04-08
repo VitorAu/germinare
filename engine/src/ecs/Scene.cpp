@@ -1,5 +1,6 @@
 #include "ecs/Scene.hpp"
 
+#include "components/CDebug.hpp"
 #include "systems/CameraSystem.hpp"
 #include "systems/DebugSystem.hpp"
 #include "systems/InputSystem.hpp"
@@ -74,6 +75,13 @@ CCamera *Scene::SceneCamera(const Entity &e)
     return it != m_sceneCameras.end() ? &it->second : nullptr;
 }
 
+CDebug *Scene::SceneDebug(const Entity &e)
+{
+    std::size_t eId = e.Id();
+    auto it = m_sceneDebugs.find(eId);
+    return it != m_sceneDebugs.end() ? &it->second : nullptr;
+}
+
 void Scene::SceneAddInput(const Entity &e, const CInput &c)
 {
     std::size_t eId = e.Id();
@@ -108,6 +116,12 @@ void Scene::SceneAddCamera(const Entity &e, const CCamera &c)
 {
     std::size_t eId = e.Id();
     m_sceneCameras[eId] = c;
+}
+
+void Scene::SceneAddDebug(const Entity &e, const CDebug &c)
+{
+    std::size_t eId = e.Id();
+    m_sceneDebugs[eId] = c;
 }
 
 CCamera *Scene::ActiveCamera()

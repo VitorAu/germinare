@@ -7,10 +7,14 @@ void DebugSystem::Update(Scene &scene)
 {
     for (auto &e : scene.SceneEntities())
     {
+        CDebug *debug = scene.SceneDebug(*e);
         CPosition *position = scene.ScenePosition(*e);
         CRigidBody *rigidBody = scene.SceneRigidBody(*e);
         CRender *render = scene.SceneRender(*e);
         CCamera *camera = scene.SceneCamera(*e);
+
+        if (!debug) continue;
+        if(!debug->m_enabled) continue;
 
         std::vector<std::pair<std::string, std::string>> debugLines = {};
         Rectangle panel = {};
